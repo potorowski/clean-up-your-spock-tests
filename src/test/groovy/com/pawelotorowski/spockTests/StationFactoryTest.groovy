@@ -16,12 +16,7 @@ class StationFactoryTest extends Specification {
             Station station = StationFactory.stationBasedOn(command)
 
         then:
-            station.name() == command.stationName
-            station.address().city() == command.city
-            station.address().street() == command.street
-            station.address().countryCode() == command.countryCode
-            station.owner() == command.stationOwner
-            station.installedAt() == command.installationDate
+            stationWasCreatedProperlyFromCommand(station, command)
     }
 
     private static InstallStationCommand validInstallationCommand() {
@@ -50,5 +45,14 @@ class StationFactoryTest extends Specification {
 
     private static Instant today() {
         Instant.now()
+    }
+
+    private static void stationWasCreatedProperlyFromCommand(Station station, InstallStationCommand command) {
+        assert station.name() == command.stationName
+        assert station.address().city() == command.city
+        assert station.address().street() == command.street
+        assert station.address().countryCode() == command.countryCode
+        assert station.owner() == command.stationOwner
+        assert station.installedAt() == command.installationDate
     }
 }
