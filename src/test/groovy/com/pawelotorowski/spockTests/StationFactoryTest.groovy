@@ -10,23 +10,45 @@ class StationFactoryTest extends Specification {
 
     def "should create station based on InstallStationCommand"() {
         given:
-            String stationName = randomAlphabetic(10)
-            String city = randomAlphabetic(10)
-            String street = randomAlphabetic(10)
-            String countryCode = randomAlphabetic(10)
-            String stationOwner = randomAlphabetic(10)
-            Instant installationDate = Instant.now()
-            InstallStationCommand command = new InstallStationCommand(stationName, city, street, countryCode, stationOwner, installationDate)
+            InstallStationCommand command = validInstallationCommand()
 
         when:
             Station station = StationFactory.stationBasedOn(command)
 
         then:
-            station.name() == stationName
-            station.address().city() == city
-            station.address().street() == street
-            station.address().countryCode() == countryCode
-            station.owner() == stationOwner
-            station.installedAt() == installationDate
+            station.name() == command.stationName
+            station.address().city() == command.city
+            station.address().street() == command.street
+            station.address().countryCode() == command.countryCode
+            station.owner() == command.stationOwner
+            station.installedAt() == command.installationDate
+    }
+
+    private static InstallStationCommand validInstallationCommand() {
+        new InstallStationCommand(someStationName(), someCity(), someStreet(), someCountryCode(), someStationOwner(), today())
+    }
+
+    private static String someStationName() {
+        randomAlphabetic(10)
+    }
+
+    private static String someCity() {
+        randomAlphabetic(10)
+    }
+
+    private static String someStreet() {
+        randomAlphabetic(10)
+    }
+
+    private static String someCountryCode() {
+        randomAlphabetic(10)
+    }
+
+    private static String someStationOwner() {
+        randomAlphabetic(10)
+    }
+
+    private static Instant today() {
+        Instant.now()
     }
 }
