@@ -2,9 +2,7 @@ package com.pawelotorowski.spockTests
 
 import spock.lang.Specification
 
-import java.time.Instant
-
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic
+import static com.pawelotorowski.spockTests.InstallStationCommandFixture.validInstallationCommand
 
 class StationFactoryTest extends Specification {
 
@@ -17,34 +15,6 @@ class StationFactoryTest extends Specification {
 
         then:
             stationWasCreatedProperlyFromCommand(station, command)
-    }
-
-    private static InstallStationCommand validInstallationCommand() {
-        new InstallStationCommand(someStationName(), someCity(), someStreet(), someCountryCode(), someStationOwner(), today())
-    }
-
-    private static String someStationName() {
-        randomAlphabetic(10)
-    }
-
-    private static String someCity() {
-        randomAlphabetic(10)
-    }
-
-    private static String someStreet() {
-        randomAlphabetic(10)
-    }
-
-    private static String someCountryCode() {
-        randomAlphabetic(10)
-    }
-
-    private static String someStationOwner() {
-        randomAlphabetic(10)
-    }
-
-    private static Instant today() {
-        Instant.now()
     }
 
     private static void stationWasCreatedProperlyFromCommand(Station station, InstallStationCommand command) {
