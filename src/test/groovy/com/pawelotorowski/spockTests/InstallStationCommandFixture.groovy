@@ -1,20 +1,36 @@
 package com.pawelotorowski.spockTests
 
+import java.time.Instant
+
 import static com.pawelotorowski.spockTests.AddressFixture.someCity
 import static com.pawelotorowski.spockTests.AddressFixture.someCountryCode
 import static com.pawelotorowski.spockTests.AddressFixture.someStreet
 import static com.pawelotorowski.spockTests.StationNameFixture.someStationName
 import static com.pawelotorowski.spockTests.StationOwnerFixture.someStationOwner
 import static com.pawelotorowski.spockTests.TimeFixture.today
-import static com.pawelotorowski.spockTests.TimeFixture.tomorrow
 
 class InstallStationCommandFixture {
 
-    static InstallStationCommand validInstallationCommand() {
-        new InstallStationCommand(someStationName(), someCity(), someStreet(), someCountryCode(), someStationOwner(), today())
+    static InstallStationCommandBuilder stationInstalled() {
+        new InstallStationCommandBuilder()
     }
 
-    static InstallStationCommand validInstallationCommandFromTheFuture() {
-        new InstallStationCommand(someStationName(), someCity(), someStreet(), someCountryCode(), someStationOwner(), tomorrow())
+    static class InstallStationCommandBuilder {
+
+        private String stationName = someStationName()
+        private String city = someCity()
+        private String street = someStreet()
+        private String countryCode = someCountryCode()
+        private String stationOwner = someStationOwner()
+        private Instant installationDate = today()
+
+        InstallStationCommandBuilder at(Instant pointInTime) {
+            installationDate = pointInTime
+            this
+        }
+
+        InstallStationCommand build() {
+            new InstallStationCommand(stationName, city, street, countryCode, stationOwner, installationDate)
+        }
     }
 }
